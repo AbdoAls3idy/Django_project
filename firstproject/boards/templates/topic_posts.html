@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}{{ block.super }} - {{topic.subject}} {% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item "><a href="{% url 'index' %}">Boards</a></li>
+    <li class="breadcrumb-item "><a href=" {% url 'boards_topic' topic.board.pk  %} ">{{topic.board.name}}</a></li>
+    <li class="breadcrumb-item active">{{topic.subject}}</li>
+{% endblock %}
+{% block content %}
+<div class="mb-4">
+    <a class="btn btn-dark btn-primary " href="{% url 'reply_topic' topic.board.pk topic.pk %}" >Replay</a>
+</div>
+    {% for post in topic.posts.all %}
+    <div class="card bg-light mb-3" style="max-width: 18rem;">
+        <div class="card-header">{{ post.created_dt }}</div>
+        <div class="card-body">
+          <h5 class="card-title">{{post.created_by.username}}</h5>
+          <p class="card-text">{{ post.message }}</p>
+        </div>
+    </div>
+    {% endfor %}
+
+{% endblock %}
